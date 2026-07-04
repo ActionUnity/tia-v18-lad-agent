@@ -2,6 +2,8 @@
 
 # TIA V18 LAD Agent Harness
 
+中文版本: [`README.zh-CN.md`](./README.zh-CN.md)
+
 <p align="center">
   <strong>Turn AI coding agents into guarded Siemens TIA Portal V18 LAD operators.</strong>
 </p>

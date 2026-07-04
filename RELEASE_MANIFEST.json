@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "name": "tia-v18-lad-agent-portable",
-  "version": "0.3.8-portable",
+  "version": "0.3.9-portable",
   "purpose": "Copy this whole folder next to any Siemens TIA Portal V18 .ap18 project so an agent or engineer can discover, export, parse, guarded-import, compile, and guarded-save through the documented harness commands.",
   "target": {
     "tiaPortal": "V18",
@@ -56,8 +56,8 @@
     "harness.json": "9a0cc885f165c2b1391346a1b27ded8c91d9156c264e0e36290ea01280f03b02",
     ".gitignore": "a0d1eba353b27d2e9ea37202b4e9b76708a15b972527cafcd4a90ebd35f0aa7b",
     ".gitattributes": "4317de3e7ba06512a76159fc381ca7cabb741f46394e075da65444feb802c15d",
-    "README.md": "cc4afdffeae98eef3b09fdeee67f16b8e9bf6ac63cc4342f99b3da6bba78229e",
-    "README.zh-CN.md": "95431c9d59cb4b74a28259306871c9c3b6757771d78b75ee624c32832bcda1f1",
+    "README.md": "0733965772d6c1c686485d9326bcea859e377ff7484a7043bc3b4deb45b92524",
+    "README.zh-CN.md": "5cc57b376f4ea9ec7f1cfe95d641e6fe12df629f024718964e066d17e85775e9",
     "LICENSE": "a8231ec8a06cea03b189601ccf8197cbc5398b6bb4ab143cab6b80b8a2874120",
     "COPY_USE.md": "0c084fef78698ded13d68d57c01d072da521dac42b4f49ae5f4de97b9556e64e"
   },

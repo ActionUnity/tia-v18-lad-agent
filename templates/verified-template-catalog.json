@@ -1,0 +1,36 @@
+{
+  "catalogVersion": "0.1.0",
+  "tiaVersion": "V18",
+  "policy": "Only insert LAD networks from verified TIA-exported templates. Do not invent raw FlgNet XML.",
+  "templates": [
+    {
+      "templateId": "parser-fixture.motor-start-stop-latch",
+      "status": "offline-parser-fixture",
+      "sourceXml": "examples/xml/FB_Motor_LAD_ParserFixture.xml",
+      "importReady": false,
+      "description": "Minimal LAD XML shape used to teach agents how contacts, negation, coils, multilingual title/comment, and operands appear in exported XML. Use only for parsing and patch dry-run; real imports must start from a TIA V18 export from the target project.",
+      "parameters": [
+        { "name": "startSymbol", "datatype": "Bool", "example": "DB_Motor.StartCmd" },
+        { "name": "stopSymbol", "datatype": "Bool", "example": "DB_Motor.StopCmd" },
+        { "name": "runSymbol", "datatype": "Bool", "example": "DB_Motor.RunLatch" }
+      ],
+      "compileEvidence": "not-applicable-parser-fixture"
+    },
+    {
+      "templateId": "db.motor-interface-standard",
+      "status": "xml-example",
+      "sourceXml": "examples/xml/DB_Motor_Interface.example.xml",
+      "importReady": "review-before-use",
+      "description": "Standard-layout global DB example for HMI/monitoring-friendly motor command/status bits.",
+      "compileEvidence": "must be produced from local TIA V18 project before production use"
+    },
+    {
+      "templateId": "tagtable.motor-basic-io",
+      "status": "xml-example",
+      "sourceXml": "examples/xml/PLC_Tags_Motor.example.xml",
+      "importReady": "review-before-use",
+      "description": "PLC tag table example for start/stop/fault inputs and motor run output.",
+      "compileEvidence": "must be produced from local TIA V18 project before production use"
+    }
+  ]
+}

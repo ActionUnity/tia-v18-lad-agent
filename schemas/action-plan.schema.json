@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "action-plan.schema.json",
+  "title": "TIA V18 LAD Agent Harness Action Plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["tiaVersion", "mode", "project", "safety", "operations"],
+  "properties": {
+    "tiaVersion": { "const": "V18" },
+    "mode": { "enum": ["lad-offline-edit", "read-only", "compile-only"] },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tiaProcessId", "plcSoftware"],
+      "properties": {
+        "path": { "type": "string" },
+        "tiaProcessId": { "type": ["integer", "null"], "minimum": 1 },
+        "plcSoftware": { "type": "string", "minLength": 1 }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["offlineOnly", "downloadToDevice", "goOnline", "requiresCompileBeforeSave", "requiresBackupBeforeWrite"],
+      "properties": {
+        "offlineOnly": { "const": true },
+        "downloadToDevice": { "const": false },
+        "goOnline": { "const": false },
+        "requiresCompileBeforeSave": { "const": true },
+        "requiresBackupBeforeWrite": { "const": true },
+        "backupPath": { "type": "string" }
+      }
+    },
+    "operations": {
+      "type": "array",
+      "minItems": 0,
+      "items": { "$ref": "#/definitions/operation" }
+    }
+  },
+  "definitions": {
+    "operation": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "enum": [
+            "probeEnv",
+            "listSessions",
+            "attachSummary",
+            "listBlocks",
+            "findBlock",
+            "exportBlock",
+            "parseLad",
+            "ladPatch",
+            "importXml",
+            "importCompile",
+            "compilePlc",
+            "saveProject",
+            "readBackSummary"
+          ]
+        },
+        "blockPath": { "type": "string" },
+        "xmlPath": { "type": "string" },
+        "outDir": { "type": "string" },
+        "importKind": { "enum": ["block", "type", "tag-table"] },
+        "baseHash": { "type": "string", "pattern": "^sha256:(?!0{64}$)[0-9a-fA-F]{64}$" },
+        "patch": { "$ref": "lad-patch-operation.schema.json" },
+        "query": { "type": "string" },
+        "compileEvidencePath": { "type": "string" },
+        "approval": { "enum": ["not-required-readonly", "required-before-import", "approved"] }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "type": { "const": "exportBlock" } }, "required": ["type"] },
+          "then": {
+            "anyOf": [
+              { "required": ["blockPath"] },
+              { "required": ["query"] }
+            ],
+            "required": ["outDir"]
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "parseLad" } }, "required": ["type"] },
+          "then": { "required": ["blockPath", "xmlPath"] }
+        },
+        {
+          "if": { "properties": { "type": { "const": "ladPatch" } }, "required": ["type"] },
+          "then": { "required": ["blockPath", "baseHash", "patch"] }
+        },
+        {
+          "if": {
+            "properties": { "type": { "enum": ["importXml", "importCompile"] } },
+            "required": ["type"]
+          },
+          "then": { "required": ["xmlPath", "importKind", "approval"] }
+        },
+        {
+          "if": { "properties": { "type": { "const": "saveProject" } }, "required": ["type"] },
+          "then": {
+            "properties": { "approval": { "const": "approved" } },
+            "required": ["approval"]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <Engineering version="V18" />
+  <DocumentInfo>
+    <Created>2000-01-01T00:00:00.0000000Z</Created>
+    <ExportSetting>None</ExportSetting>
+    <InstalledProducts />
+  </DocumentInfo>
+  <SW.Blocks.FB ID="0">
+    <AttributeList>
+      <Name>FB_Motor</Name>
+      <ProgrammingLanguage>LAD</ProgrammingLanguage>
+    </AttributeList>
+    <ObjectList>
+      <SW.Blocks.CompileUnit ID="3" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource>
+            <FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v5">
+              <Parts>
+                <Access Scope="GlobalVariable" UId="21"><Symbol><Component Name="DB_Motor" /><Component Name="StartCmd" /></Symbol></Access>
+                <Access Scope="GlobalVariable" UId="22"><Symbol><Component Name="DB_Motor" /><Component Name="StopCmd" /></Symbol></Access>
+                <Access Scope="GlobalVariable" UId="23"><Symbol><Component Name="DB_Motor" /><Component Name="RunLatch" /></Symbol></Access>
+                <Part Name="Contact" UId="24" />
+                <Part Name="Contact" UId="25"><Negated Name="operand" /></Part>
+                <Part Name="Coil" UId="26" />
+              </Parts>
+              <Wires>
+                <Wire UId="27"><IdentCon UId="21" /><NameCon UId="24" Name="operand" /></Wire>
+                <Wire UId="28"><IdentCon UId="22" /><NameCon UId="25" Name="operand" /></Wire>
+                <Wire UId="29"><IdentCon UId="23" /><NameCon UId="26" Name="operand" /></Wire>
+              </Wires>
+            </FlgNet>
+          </NetworkSource>
+          <ProgrammingLanguage>LAD</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="4" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="5" CompositionName="Items"><AttributeList><Culture>en-US</Culture><Text>Start stop latch parser fixture</Text></AttributeList></MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="6" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="7" CompositionName="Items"><AttributeList><Culture>en-US</Culture><Text>Start latch</Text></AttributeList></MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+    </ObjectList>
+  </SW.Blocks.FB>
+</Document>

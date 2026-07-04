@@ -1,0 +1,5 @@
+read:
+  - AGENTS.md
+  - harness.json
+  - docs/editing-contract.md
+  - docs/validation-gates.md

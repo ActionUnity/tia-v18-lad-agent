@@ -1,0 +1,26 @@
+# Runtime/project artifacts generated after copying the harness next to a TIA project.
+# Keep workspace/README.md, but do not publish real project exports, patches,
+# compile evidence, reports, screenshots, or logs.
+workspace/exports/**
+workspace/patched/**
+workspace/reports/**
+workspace/evidence/**
+!workspace/exports/.gitkeep
+!workspace/patched/.gitkeep
+!workspace/reports/.gitkeep
+!workspace/evidence/.gitkeep
+!workspace/README.md
+
+# Local/editor/runtime noise
+*.log
+*.tmp
+*.bak
+*.orig
+*.pdb
+*.user
+*.suo
+.env
+.vs/
+.idea/
+__pycache__/
+*.pyc

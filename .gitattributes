@@ -1,0 +1,13 @@
+# Keep repository text files stable across Windows/macOS/Linux checkouts.
+* text=auto eol=lf
+
+# Bundled runtime binaries.
+*.exe binary
+*.dll binary
+*.zip binary
+*.pdb binary
+
+# TIA Portal project/archive files should not normally be committed, but if a
+# sanitized fixture is intentionally added, keep it binary.
+*.ap18 binary
+*.zap18 binary

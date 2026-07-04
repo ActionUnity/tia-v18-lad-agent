@@ -1,0 +1,17 @@
+{
+  "tiaVersion": "V18",
+  "mode": "lad-offline-edit",
+  "project": {
+    "path": "",
+    "tiaProcessId": null,
+    "plcSoftware": "first-plc"
+  },
+  "safety": {
+    "offlineOnly": true,
+    "downloadToDevice": false,
+    "goOnline": false,
+    "requiresCompileBeforeSave": true,
+    "requiresBackupBeforeWrite": true
+  },
+  "operations": []
+}

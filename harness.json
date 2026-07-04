@@ -1,0 +1,153 @@
+{
+  "name": "tia-v18-lad-agent-harness",
+  "version": "0.3.0-portable",
+  "target": {
+    "tiaPortal": "V18",
+    "api": "Siemens TIA Openness PublicAPI V18",
+    "languagePolicy": "LAD-first; SCL only for offline notes or non-delivered helper examples",
+    "deliveryMode": "offline project edit through Openness export/import/compile"
+  },
+  "entrypoints": {
+    "humanReadme": "README.md",
+    "agentStart": "AGENTS.md",
+    "skill": "SKILL.md",
+    "claude": "CLAUDE.md",
+    "gemini": "GEMINI.md",
+    "cursor": ".cursorrules",
+    "cursorRules": ".cursor/rules/tia-v18-lad-agent.mdc",
+    "copilot": "COPILOT.md",
+    "copilotVscode": ".github/copilot-instructions.md",
+    "copilotPathInstructions": ".github/instructions/tia-v18-lad.instructions.md",
+    "roo": "ROO.md",
+    "rooRules": ".roo/rules.md",
+    "rooRulesDirectory": ".roo/rules/tia-v18-lad-harness.md",
+    "rooLegacy": ".roorules",
+    "kilo": "KILO.md",
+    "kiloCodeRules": ".kilocode/rules.md",
+    "kiloRules": ".kilo/rules/tia-v18-lad-harness.md",
+    "kiloCodeRulesDirectory": ".kilocode/rules/tia-v18-lad-harness.md",
+    "windsurf": ".windsurfrules",
+    "windsurfRules": ".windsurf/rules/tia-v18-lad-harness.md",
+    "continue": ".continue/rules.md",
+    "continueRules": ".continue/rules/tia-v18-lad-harness.md",
+    "continueReadme": "CONTINUE.md",
+    "devinRules": ".devin/rules/tia-v18-lad-harness.md",
+    "clineRules": ".clinerules/tia-v18-lad-harness.md",
+    "aider": "AIDER.md",
+    "aiderConfig": ".aider.conf.yml",
+    "aiderConventions": "CONVENTIONS.md",
+    "runner": "scripts/Invoke-TiaV18LadHarness.ps1",
+    "offlineValidator": "scripts/Test-HarnessOffline.ps1",
+    "releaseValidator": "scripts/Test-HarnessRelease.ps1",
+    "liveRoundTripValidator": "scripts/Test-HarnessLiveRoundTrip.ps1",
+    "disposableProjectPrep": "scripts/New-TiaV18DisposableLadProject.ps1",
+    "validationGates": "docs/validation-gates.md",
+    "wikiArchitecture": "docs/wiki/architecture.md",
+    "wikiAgentOnboarding": "docs/wiki/agent-onboarding.md",
+    "wikiSafetyGates": "docs/wiki/safety-gates.md",
+    "wikiTiaV18XmlCompatibility": "docs/wiki/tia-v18-xml-compatibility.md",
+    "wikiExistingProjectReadWrite": "docs/wiki/existing-project-readwrite.md",
+    "developmentTodo": "docs/development-todo.md",
+    "xmlCleaner": "scripts/Clean-LadXmlNamespace.ps1",
+    "installer": "scripts/Install-HarnessToProject.ps1"
+  },
+  "portable": true,
+  "bundledCli": "tools/bin/AiPlcTiaV18.exe",
+  "requiredRuntimeFiles": [
+    "tools/bin/AiPlcTiaV18.exe",
+    "tools/bin/AiPlcTiaV18.Core.dll"
+  ],
+  "commands": {
+    "probe": "powershell -ExecutionPolicy Bypass -File ./scripts/Invoke-TiaV18LadHarness.ps1 -Task Probe",
+    "listSessions": "powershell -ExecutionPolicy Bypass -File ./scripts/Invoke-TiaV18LadHarness.ps1 -Task ListSessions",
+    "attachSummary": "powershell -ExecutionPolicy Bypass -File ./scripts/Invoke-TiaV18LadHarness.ps1 -Task AttachSummary -Pid <pid>",
+    "listBlocks": "powershell -ExecutionPolicy Bypass -File ./scripts/Invoke-TiaV18LadHarness.ps1 -Task ListBlocks -Pid <pid> [-Query <text>]",
+    "findBlock": "powershell -ExecutionPolicy Bypass -File ./scripts/Invoke-TiaV18LadHarness.ps1 -Task FindBlock -Pid <pid> -Query <text>",
+    "exportBlock": "powershell -ExecutionPolicy Bypass -File ./scripts/Invoke-TiaV18LadHarness.ps1 -Task ExportBlock -Pid <pid> -BlockPath <blockPath>|-Query <text> -OutDir <outDir>",
+    "parseLad": "powershell -ExecutionPolicy Bypass -File ./scripts/Invoke-TiaV18LadHarness.ps1 -Task ParseLad -XmlPath <xmlPath> -BlockPath <blockPath>",
+    "importXmlBlock": "powershell -ExecutionPolicy Bypass -File ./scripts/Invoke-TiaV18LadHarness.ps1 -Task ImportXml -Pid <pid> -XmlPath <xmlPath> -Kind block -AllowWrite -ExpectedProjectPath <approved.ap18>",
+    "importXmlType": "powershell -ExecutionPolicy Bypass -File ./scripts/Invoke-TiaV18LadHarness.ps1 -Task ImportXml -Pid <pid> -XmlPath <xmlPath> -Kind type -AllowWrite -ExpectedProjectPath <approved.ap18>",
+    "importXmlTagTable": "powershell -ExecutionPolicy Bypass -File ./scripts/Invoke-TiaV18LadHarness.ps1 -Task ImportXml -Pid <pid> -XmlPath <xmlPath> -Kind tag-table -AllowWrite -ExpectedProjectPath <approved.ap18>",
+    "importCompile": "powershell -ExecutionPolicy Bypass -File ./scripts/Invoke-TiaV18LadHarness.ps1 -Task ImportCompile -Pid <pid> -XmlPath <xmlPath> -Kind block|type|tag-table -AllowWrite -ExpectedProjectPath <approved.ap18>",
+    "compilePlc": "powershell -ExecutionPolicy Bypass -File ./scripts/Invoke-TiaV18LadHarness.ps1 -Task CompilePlc -Pid <pid> -AllowWrite -ExpectedProjectPath <approved.ap18>",
+    "saveProject": "powershell -ExecutionPolicy Bypass -File ./scripts/Invoke-TiaV18LadHarness.ps1 -Task SaveProject -Pid <pid> -AllowWrite -ExpectedProjectPath <approved.ap18>",
+    "createDisposableProject": "powershell -ExecutionPolicy Bypass -File ./scripts/New-TiaV18DisposableLadProject.ps1 -AllowCreate [-DeviceTypeIdentifier <OrderNumber:...>]",
+    "cleanXml": "powershell -ExecutionPolicy Bypass -File ./scripts/Clean-LadXmlNamespace.ps1 -XmlPath <xmlPath> [-OutputPath <outPath>] [-PassThru]",
+    "validateXml": "powershell -ExecutionPolicy Bypass -File ./scripts/Invoke-TiaV18LadHarness.ps1 -Task ValidateXml -XmlPath <xmlPath>"
+  },
+  "tools": [
+    {
+      "name": "Test-HarnessLiveRoundTrip.ps1",
+      "path": "scripts/Test-HarnessLiveRoundTrip.ps1",
+      "description": "Runs a guarded live TIA V18 validation flow: offline validation, probe, session selection, attach summary, block resolution, export, parse, optional import-compile, and optional guarded save. Run discovery first and pass a real block name/path from AttachSummary/ListBlocks; do not use placeholder text as Query. Existing-project write proof starts with -SelfImportExportedXml -AllowWrite and -ExpectedProjectPath <approved.ap18>. Do not save first proof.",
+      "usage": "powershell -ExecutionPolicy Bypass -File ./scripts/Test-HarnessLiveRoundTrip.ps1 -Pid <pid> -Query <actualBlockNameFromDiscovery> -ExpectedProjectPath <approved.ap18> [-SelfImportExportedXml -AllowWrite | -PatchedXmlPath <xml> -AllowWrite [-CleanXml]] [-Save only after explicit save approval]"
+    },
+    {
+      "name": "Test-HarnessRelease.ps1",
+      "path": "scripts/Test-HarnessRelease.ps1",
+      "description": "Runs offline package validation, write-gate regression tests, live write-intent preflight checks, installer portability checks, and optional zip validation.",
+      "usage": "powershell -ExecutionPolicy Bypass -File ./scripts/Test-HarnessRelease.ps1 [-ZipPath <zip>]"
+    },
+    {
+      "name": "New-TiaV18DisposableLadProject.ps1",
+      "path": "scripts/New-TiaV18DisposableLadProject.ps1",
+      "description": "Deferred/fallback support. Delegates to the bundled x64 C# CLI to create a disposable TIA V18 project under %TEMP%, add a PLC device from a guarded device-type list, create a real LAD FB through TIA Openness CreateFB, save the project, and print a no-op self-import command. Requires -AllowCreate, keeps -TargetRoot under %TEMP%, and is only for separate disposable test projects.",
+      "usage": "powershell -ExecutionPolicy Bypass -File ./scripts/New-TiaV18DisposableLadProject.ps1 -AllowCreate [-DeviceTypeIdentifier <OrderNumber:...>] [-ProjectName <name>]"
+    },
+    {
+      "name": "Test-TiaAttachDirect.ps1",
+      "path": "scripts/Test-TiaAttachDirect.ps1",
+      "description": "Direct PowerShell attach to TIA Portal using Siemens.Engineering.dll. Useful for debugging Openness connectivity issues bypassing the CLI tool.",
+      "usage": "powershell -ExecutionPolicy Bypass -File ./scripts/Test-TiaAttachDirect.ps1 -ProcessId <pid>"
+    },
+    {
+      "name": "Clean-LadXmlNamespace.ps1",
+      "path": "scripts/Clean-LadXmlNamespace.ps1",
+      "description": "Cleans generated LAD XML: removes ns0:/flg: FlgNet prefixes and ns1:/if: Interface prefixes into default xmlns form, removes unreferenced Access elements, computes SHA256.",
+      "usage": "powershell -ExecutionPolicy Bypass -File ./scripts/Clean-LadXmlNamespace.ps1 -XmlPath <xml> [-OutputPath <out>]"
+    },
+    {
+      "name": "Install-HarnessToProject.ps1",
+      "path": "scripts/Install-HarnessToProject.ps1",
+      "description": "Copies this portable harness folder into a new TIA project workspace, preserving scripts/tools/docs and resetting transient workspace artifacts by default.",
+      "usage": "powershell -ExecutionPolicy Bypass -File ./scripts/Install-HarnessToProject.ps1 -TargetRoot <new-project-workdir> [-Force]"
+    }
+  ],
+  "supportedObjects": [
+    { "kind": "fb", "format": "TIA exported LAD XML", "importKind": "block" },
+    { "kind": "fc", "format": "TIA exported LAD XML", "importKind": "block" },
+    { "kind": "globalDb", "format": "TIA Openness XML", "importKind": "block" },
+    { "kind": "udt", "format": "TIA Openness XML", "importKind": "type" },
+    { "kind": "plcTagTable", "format": "TIA Openness XML", "importKind": "tag-table" }
+  ],
+  "schemas": {
+    "actionPlan": "schemas/action-plan.schema.json",
+    "ladPatchOperation": "schemas/lad-patch-operation.schema.json"
+  },
+  "workspaceLayout": {
+    "exports": "workspace/exports",
+    "patched": "workspace/patched",
+    "reports": "workspace/reports",
+    "evidence": "workspace/evidence"
+  },
+  "safety": {
+    "neverDoAutomatically": [
+      "download to PLC/HMI",
+      "go online",
+      "force variables",
+      "change safety/F blocks",
+      "delete production blocks without an explicit backup and approval"
+    ],
+    "writeGate": [
+      "export current object first",
+      "record base sha256 hash",
+      "edit smallest XML scope possible",
+      "validate XML is well-formed",
+      "pass -AllowWrite only after explicit approval for the target PID/project/block",
+      "existing-project writes must include -ExpectedProjectPath or -ExpectedProjectName so the wrapper re-attaches and verifies the intended project before import/compile/save",
+      "import into offline/open project",
+      "compile imported XML with zero errors before save",
+      "save only through the guarded wrapper after ImportCompile/RoundTripCompile evidence shows matching PID/processId, exitCode=0, success=true, and errorCount=0"
+    ]
+  }
+}

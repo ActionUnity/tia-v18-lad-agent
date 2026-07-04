@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "lad-patch-operation.schema.json",
+  "title": "Conservative LAD XML Patch Operation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["operation", "blockPath", "baseHash", "target"],
+  "properties": {
+    "operation": {
+      "enum": [
+        "renameNetwork",
+        "editNetworkComment",
+        "replaceOperand",
+        "insertNetworkFromVerifiedTemplate"
+      ]
+    },
+    "blockPath": { "type": "string", "minLength": 1 },
+    "baseHash": { "type": "string", "pattern": "^sha256:(?!0{64}$)[0-9a-fA-F]{64}$" },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "networkIndex": { "type": "integer", "minimum": 1 },
+        "networkId": { "type": "string" },
+        "operandSymbol": { "type": "string" }
+      },
+      "anyOf": [
+        { "required": ["networkIndex"] },
+        { "required": ["networkId"] },
+        { "required": ["operandSymbol"] }
+      ]
+    },
+    "value": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "title": { "type": "string" },
+        "comment": { "type": "string" },
+        "oldSymbol": { "type": "string" },
+        "newSymbol": { "type": "string" },
+        "templateId": { "type": "string" },
+        "parameters": { "type": "object" }
+      }
+    },
+    "risk": { "enum": ["readonly", "low", "medium", "high"] },
+    "notes": { "type": "string" }
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "name": "tia-v18-lad-agent-portable",
+  "version": "0.3.6-portable",
+  "purpose": "Copy this whole folder next to any Siemens TIA Portal V18 .ap18 project so an agent or engineer can discover, export, parse, guarded-import, compile, and guarded-save through the documented harness commands.",
+  "target": {
+    "tiaPortal": "V18",
+    "projectExtension": ".ap18",
+    "opennessApi": "Siemens TIA Openness PublicAPI V18",
+    "windowsRuntime": ".NET Framework 4.8"
+  },
+  "copyPolicy": {
+    "copyWholeFolder": true,
+    "doNotCopyOnlyScripts": true,
+    "recommendedInstallScript": "scripts/Install-HarnessToProject.ps1",
+    "manualTargetLayout": "<project-workdir>/tia-v18-lad-agent/",
+    "workspaceArtifactsAreTransient": [
+      "workspace/exports",
+      "workspace/patched",
+      "workspace/reports",
+      "workspace/evidence"
+    ]
+  },
+  "requiredFiles": [
+    "README.md",
+    "README.zh-CN.md",
+    "LICENSE",
+    "AGENTS.md",
+    "harness.json",
+    ".gitignore",
+    ".gitattributes",
+    "scripts/Invoke-TiaV18LadHarness.ps1",
+    "scripts/Test-HarnessOffline.ps1",
+    "scripts/Test-HarnessLiveRoundTrip.ps1",
+    "scripts/Install-HarnessToProject.ps1",
+    "tools/bin/AiPlcTiaV18.exe",
+    "tools/bin/AiPlcTiaV18.Core.dll",
+    "docs/editing-contract.md",
+    "docs/validation-gates.md",
+    "schemas/action-plan.schema.json",
+    "schemas/lad-patch-operation.schema.json",
+    "workspace/README.md",
+    "workspace/exports/.gitkeep",
+    "workspace/patched/.gitkeep",
+    "workspace/reports/.gitkeep",
+    "workspace/evidence/.gitkeep",
+    "COPY_USE.md",
+    "RELEASE_MANIFEST.json"
+  ],
+  "coreFileHashesSha256": {
+    "tools/bin/AiPlcTiaV18.exe": "936f501055fdd7709eb70685149e3c9d06e35da80830bd99ce6d16736725c0ab",
+    "tools/bin/AiPlcTiaV18.Core.dll": "5b163ee2fadc669d1c9233f28cd2f177899e2949ede238292e9695b58cb3b802",
+    "scripts/Invoke-TiaV18LadHarness.ps1": "97879d3d7c0fa81edf53a6622cedaaefe3d24f53dff17ec3fd5bdd2083172b3b",
+    "scripts/Test-HarnessOffline.ps1": "789cb522ba16fe2fe56a423d16e4c6ba304610788a2ff77cd3bf08e2db9c81fa",
+    "scripts/Install-HarnessToProject.ps1": "789a3cc25deac220c972274995a3793711581fd2199b39a4852a8c8a12daaea0",
+    "harness.json": "9a0cc885f165c2b1391346a1b27ded8c91d9156c264e0e36290ea01280f03b02",
+    ".gitignore": "a0d1eba353b27d2e9ea37202b4e9b76708a15b972527cafcd4a90ebd35f0aa7b",
+    ".gitattributes": "4317de3e7ba06512a76159fc381ca7cabb741f46394e075da65444feb802c15d",
+    "README.md": "9dc9faa937f1465b66c20fb2e4aa52c37090eab16979e0494c3225544b9bad45",
+    "README.zh-CN.md": "95431c9d59cb4b74a28259306871c9c3b6757771d78b75ee624c32832bcda1f1",
+    "LICENSE": "a8231ec8a06cea03b189601ccf8197cbc5398b6bb4ab143cab6b80b8a2874120",
+    "COPY_USE.md": "0c084fef78698ded13d68d57c01d072da521dac42b4f49ae5f4de97b9556e64e"
+  },
+  "firstCommandsAfterCopy": [
+    {
+      "name": "offline package check",
+      "command": "powershell -ExecutionPolicy Bypass -File .\\scripts\\Test-HarnessOffline.ps1",
+      "writesToTiaProject": false
+    },
+    {
+      "name": "probe local environment",
+      "command": "powershell -ExecutionPolicy Bypass -File .\\scripts\\Invoke-TiaV18LadHarness.ps1 -Task Probe",
+      "writesToTiaProject": false
+    },
+    {
+      "name": "discover open TIA sessions",
+      "command": "powershell -ExecutionPolicy Bypass -File .\\scripts\\Invoke-TiaV18LadHarness.ps1 -Task ListSessions",
+      "writesToTiaProject": false
+    }
+  ],
+  "writeSafety": {
+    "defaultMode": "read-only",
+    "requiresAllowWrite": true,
+    "requiresExpectedProjectPathOrName": true,
+    "importCompileDoesNotSave": true,
+    "saveProjectIsSeparateReviewedCommand": true,
+    "neverAutomatically": [
+      "download to PLC/HMI",
+      "go online",
+      "force variables",
+      "change safety/F blocks",
+      "delete production blocks without explicit backup and approval"
+    ]
+  },
+  "notAProjectProfile": true,
+  "notes": [
+    "This manifest is a lightweight package identity and copy/use checklist, not a commercial release process.",
+    "It does not describe any project-specific PLC logic. Project-specific facts belong in a separate profile.",
+    "The bundled AiPlcTiaV18 executable and core DLL are included so the package remains copy-and-use without rebuilding from source.",
+    "If any core file changes, update this manifest version and hashes before treating the folder as the current portable package."
+  ]
+}

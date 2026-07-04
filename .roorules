@@ -1,0 +1,10 @@
+# TIA V18 LAD Harness
+
+Before editing Siemens TIA Portal PLC logic, read `AGENTS.md`, `harness.json`,
+`docs/editing-contract.md`, and `docs/validation-gates.md`.
+
+Use wrapper commands in `scripts/`. Import, standalone compile, and save require
+explicit approval and `-AllowWrite`. Existing-project writes must include
+`-ExpectedProjectPath` or `-ExpectedProjectName`; first proof is unchanged
+self-import of the current export, with no save until the save gate is
+explicitly approved.

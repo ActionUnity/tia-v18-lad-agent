@@ -1,0 +1,55 @@
+{
+  "tiaVersion": "V18",
+  "mode": "lad-offline-edit",
+  "project": {
+    "path": "D:/TiaProjects/Line1.ap18",
+    "tiaProcessId": 12345,
+    "plcSoftware": "first-plc"
+  },
+  "safety": {
+    "offlineOnly": true,
+    "downloadToDevice": false,
+    "goOnline": false,
+    "requiresCompileBeforeSave": true,
+    "requiresBackupBeforeWrite": true,
+    "backupPath": "D:/TiaProjects/Line1_before_ai_edit.zap18"
+  },
+  "operations": [
+    {
+      "type": "exportBlock",
+      "blockPath": "Program blocks/FB_Motor",
+      "outDir": "workspace/exports",
+      "approval": "not-required-readonly"
+    },
+    {
+      "type": "parseLad",
+      "blockPath": "Program blocks/FB_Motor",
+      "xmlPath": "workspace/exports/Program blocks_FB_Motor.xml",
+      "approval": "not-required-readonly"
+    },
+    {
+      "type": "ladPatch",
+      "blockPath": "Program blocks/FB_Motor",
+      "baseHash": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+      "patch": {
+        "operation": "replaceOperand",
+        "blockPath": "Program blocks/FB_Motor",
+        "baseHash": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "target": { "operandSymbol": "DB_Motor.StartCmd" },
+        "value": { "oldSymbol": "DB_Motor.StartCmd", "newSymbol": "DB_Motor.AutoStartCmd" },
+        "risk": "medium",
+        "notes": "示例：真实操作时必须使用 parse-lad 返回的真实 baseHash。"
+      },
+      "approval": "required-before-import"
+    },
+    {
+      "type": "importXml",
+      "xmlPath": "workspace/patched/FB_Motor.xml",
+      "importKind": "block",
+      "approval": "approved"
+    },
+    { "type": "compilePlc", "approval": "approved" },
+    { "type": "saveProject", "approval": "approved" },
+    { "type": "readBackSummary", "approval": "not-required-readonly" }
+  ]
+}
